@@ -1,0 +1,12 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+
+def jenkins = Jenkins.getInstance()
+
+// Set security realm if not set.
+if(!(jenkins.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
+  jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
+  jenkins.save()
+}

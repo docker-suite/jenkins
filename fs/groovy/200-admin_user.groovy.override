@@ -1,0 +1,29 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+
+def env = System.getenv()
+def jenkins = Jenkins.getInstance()
+
+// Admin user and password must be declared
+if(env.JENKINS_USER == null && env.JENKINS_PASS) {
+    return
+}
+
+// Get list or current users
+def currentUsers = jenkins.getSecurityRealm().getAllUsers().collect { it.getId() }
+
+// Create default admin user if not exists.
+if(!(env.JENKINS_USER in currentUsers)) {
+    // Create user
+    def hudsonRealm = jenkins.getSecurityRealm()
+    hudsonRealm.createAccount(env.JENKINS_USER, env.JENKINS_PASS)
+    jenkins.setSecurityRealm(hudsonRealm)
+    // Set user as admin
+    def strategy = new GlobalMatrixAuthorizationStrategy()
+    strategy.add(Jenkins.ADMINISTER, env.JENKINS_USER)
+    jenkins.setAuthorizationStrategy(strategy)
+    // Save
+    jenkins.save()
+}

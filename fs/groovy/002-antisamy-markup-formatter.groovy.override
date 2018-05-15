@@ -1,0 +1,10 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+
+def jenkins = Jenkins.getInstance()
+
+// Enable html rendering of description (from antisamy-markup-formatter)
+jenkins.setMarkupFormatter(new hudson.markup.RawHtmlMarkupFormatter(false))
+jenkins.save()

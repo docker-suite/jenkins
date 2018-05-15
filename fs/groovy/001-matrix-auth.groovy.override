@@ -1,0 +1,12 @@
+#!groovy
+
+import jenkins.model.*
+import hudson.security.*
+
+def jenkins = Jenkins.getInstance()
+
+// Set auth strategy if not set (from matrix-auth)
+if(!(jenkins.getAuthorizationStrategy() instanceof GlobalMatrixAuthorizationStrategy)) {
+  jenkins.setAuthorizationStrategy(new GlobalMatrixAuthorizationStrategy())
+  jenkins.save()
+}
