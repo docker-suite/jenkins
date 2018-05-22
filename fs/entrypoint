@@ -10,6 +10,12 @@ function getDockerSocketGroup () {
 # Display the containerbanner
 cat /banner
 
+# Run every files in /etc/entrypoint.d
+for _file in $(find /etc/entrypoint.d -type f -iname *.sh | sort); do
+    sudo chmod +x ${_file}
+    sudo sh ${_file}
+done
+
 # Change docker socket user
 echo ''
 echo "***** docker-socket *****"

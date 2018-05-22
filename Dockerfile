@@ -22,10 +22,13 @@ RUN addgroup -g ${GROUP_DOCKER_GID} ${GROUP_DOCKER} \
 # Add user jenkins to list of sudoers
 RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# Install docker
+# Install docker && alpine-base
 RUN \
 	# Print executed commands
 	set -x \
+    # Download the install script and run it
+    && curl -s -o /tmp/install-base.sh https://raw.githubusercontent.com/craftdock/Install-Scripts/master/alpine-base/install-base.sh \
+    && sh /tmp/install-base.sh \
     # Update repository indexes
     && apk update --update-cache \
     # Install docker and sudo
