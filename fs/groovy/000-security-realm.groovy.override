@@ -3,10 +3,12 @@
 import jenkins.model.*
 import hudson.security.*
 
+// Jenkins instance
 def jenkins = Jenkins.getInstance()
 
+// First check if security is enable
+if(jenkins.getAuthorizationStrategy() != null) { return; }
+
 // Set security realm if not set.
-if(!(jenkins.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
-  jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
-  jenkins.save()
-}
+jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
+jenkins.save()
