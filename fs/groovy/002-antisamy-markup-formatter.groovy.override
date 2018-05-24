@@ -3,7 +3,17 @@
 import jenkins.model.*
 import hudson.security.*
 
+// Jenkins instance
 def jenkins = Jenkins.getInstance()
+
+// First check if a markup plugin is in use
+// if this is the case, then stop here
+if(jenkins.getMarkupFormatter() != null) { return; }
+
+// Check that OWASP Markup Formatter plugin is installed
+// if OWASP Markup Formatter is not installed then stop here
+def owasp = jenkins.getPluginManager().getPlugin('antisamy-markup-formatter');
+if(owasp == null) { return; }
 
 // Enable html rendering of description (from antisamy-markup-formatter)
 jenkins.setMarkupFormatter(new hudson.markup.RawHtmlMarkupFormatter(false))
