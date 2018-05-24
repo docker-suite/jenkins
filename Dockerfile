@@ -44,11 +44,7 @@ RUN install-plugins.sh \
     # Matrix Authorization Strategy: https://plugins.jenkins.io/matrix-auth
     matrix-auth \
     # OWASP Markup Formatter: https://plugins.jenkins.io/antisamy-markup-formatter
-    antisamy-markup-formatter \
-    # Blue Ocean: https://plugins.jenkins.io/blueocean
-    blueocean \
-    # Folders: https://plugins.jenkins.io/cloudbees-folder
-    cloudbees-folder
+    antisamy-markup-formatter
 
 # Copy fs files to file system
 COPY fs/groovy/* /usr/share/jenkins/ref/init.groovy.d/
