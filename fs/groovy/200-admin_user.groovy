@@ -12,20 +12,20 @@ if(jenkins.getAuthorizationStrategy() == null) { return; }
 if(!(jenkins.getAuthorizationStrategy() instanceof GlobalMatrixAuthorizationStrategy) { return; }
 
 // Admin user and password must be declared
-if(env.JENKINS_USER == null || env.JENKINS_PASS == null) { return; }
+if(env.JENKINS_ADMIN_USER == null || env.JENKINS_ADMIN_PASS == null) { return; }
 
 // Get list or current users
 def currentUsers = jenkins.getSecurityRealm().getAllUsers().collect { it.getId() }
 
 // Create default admin user if not exists.
-if(!(env.JENKINS_USER in currentUsers)) {
+if(!(env.JENKINS_ADMIN_USER in currentUsers)) {
     // Create user
     def hudsonRealm = jenkins.getSecurityRealm()
-    hudsonRealm.createAccount(env.JENKINS_USER, env.JENKINS_PASS)
+    hudsonRealm.createAccount(env.JENKINS_ADMIN_USER, env.JENKINS_ADMIN_PASS)
     jenkins.setSecurityRealm(hudsonRealm)
     // Set user as admin
     def strategy = jenkins.getAuthorizationStrategy()
-    strategy.add(Jenkins.ADMINISTER, env.JENKINS_USER)
+    strategy.add(Jenkins.ADMINISTER, env.JENKINS_ADMIN_USER)
     jenkins.setAuthorizationStrategy(strategy)
     // Save
     jenkins.save()

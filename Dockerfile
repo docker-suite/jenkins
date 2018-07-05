@@ -3,21 +3,25 @@ FROM jenkins/jenkins:alpine
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       description="Minimal Alpine image used as a base image."
 
-ARG USER_JENKINS=jenkins
-ARG USER_ROOT=root
-ARG GROUP_DOCKER=docker
-ARG GROUP_DOCKER_GID=10001
+ARG JENKINS_USER=jenkins
+ARG ROOT_USER=root
+ARG DOCKER_GROUP=docker
+ARG DOCKER_GID=10001
 
-ENV JENKINS_USER=admin
-ENV JENKINS_PASS=password
-ENV JENKINS_EXECUTORS=2
+ENV JENKINS_USER $JENKINS_USER
+ENV JENKINS_HOME $JENKINS_HOME
+ENV DOCKER_GROUP $DOCKER_GROUP
+
+ENV JENKINS_ADMIN_USER=admin
+ENV JENKINS_ADMIN_PASS=password
+ENV JENKINS_NB_EXECUTORS=2
 
 # Switch to root user
-USER ${USER_ROOT}
+USER ${ROOT_USER}
 
 # Create docker group and add user jenkins to the group
-RUN addgroup -g ${GROUP_DOCKER_GID} ${GROUP_DOCKER} \
-	&& addgroup ${USER_JENKINS} ${GROUP_DOCKER}
+RUN addgroup -g ${DOCKER_GID} ${DOCKER_GROUP} \
+	&& addgroup ${JENKINS_USER} ${DOCKER_GROUP}
 
 # Add user jenkins to list of sudoers
 RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -32,12 +36,14 @@ RUN \
     # Update repository indexes
     && apk update --update-cache \
     # Install docker and sudo
-    && apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ docker sudo \
+    && apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        docker \ 
+        sudo \
 	# Clear apk's cache
-	&& rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+	&& apk-cleanup
 
 # Switch to user jenkins
-USER ${USER_JENKINS}
+USER ${JENKINS_USER}
 
 # Install default plugins
 RUN install-plugins.sh \

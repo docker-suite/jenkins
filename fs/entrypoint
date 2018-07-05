@@ -1,8 +1,5 @@
 #!/bin/bash
 
-USER_JENKINS=jenkins
-GROUP_DOCKER=docker
-
 function getDockerSocketGroup () {
 	echo "$(ls -al /var/run/docker.sock | awk '{print $4}')"
 }
@@ -21,8 +18,8 @@ echo ''
 echo "***** docker-socket *****"
 echo "Current user: $(whoami)"
 echo "/var/run/docker.sock is currently in group:" $(getDockerSocketGroup)
-echo "Changing group of docker.sock to: $GROUP_DOCKER"
-sudo chown :$GROUP_DOCKER /var/run/docker.sock
+echo "Changing group of docker.sock to: $DOCKER_GROUP"
+sudo chown :$DOCKER_GROUP /var/run/docker.sock
 echo "/var/run/docker.sock is now in group:" $(getDockerSocketGroup)
 echo "*************************"
 echo ''
