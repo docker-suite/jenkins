@@ -54,8 +54,11 @@ RUN install-plugins.sh \
 
 # Copy fs files to file system
 COPY fs/groovy/* /usr/share/jenkins/ref/init.groovy.d/
-COPY fs/banner /
-COPY fs/entrypoint /
+COPY fs/banner /banner
+COPY fs/entrypoint /entrypoint
+
+# Make entrypoint executable
+RUN sudo chmod +x entrypoint
 
 # Entrypoint
 ENTRYPOINT ["/entrypoint"]
