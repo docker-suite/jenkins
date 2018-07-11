@@ -39,6 +39,9 @@ RUN \
     && apk-install --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
         docker \ 
         sudo \
+    # Add useful tools
+    && apk-install \
+        findutils \
 	# Clear apk's cache
 	&& apk-cleanup
 
