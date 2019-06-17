@@ -1,0 +1,18 @@
+file:
+  /usr/local/bin/jenkins.sh:
+    exists: true
+    mode: "0755"
+    filetype: file
+
+package:
+  sudo:
+    installed: true
+  findutils:
+    installed: true
+
+command:
+  docker-version:
+    exit-status: 0
+    exec: "docker --version"
+    stdout:
+    - "Docker version"

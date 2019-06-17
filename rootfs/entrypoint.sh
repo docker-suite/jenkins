@@ -1,16 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-function getDockerSocketGroup () {
+getDockerSocketGroup () {
 	echo "$(ls -al /var/run/docker.sock | awk '{print $4}')"
 }
 
-# Display the containerbanner
+# Display the container banner
 cat /banner
 
-# Run every files in /etc/entrypoint.d
-for _file in $(find /etc/entrypoint.d -type f -iname *.sh | sort); do
-    sudo chmod +x ${_file}
-    sudo sh ${_file}
+# Run scripts in /etc/entrypoint.d
+for file in $( find /etc/entrypoint.d/ -name '*.sh' -type f | sort -u ); do
+    [ -x "${file}" ] && sudo bash "${file}"
 done
 
 # Change docker socket user

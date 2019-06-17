@@ -9,7 +9,7 @@ def jenkins = Jenkins.getInstance()
 // First check if security is enable
 if(jenkins.getAuthorizationStrategy() == null) { return; }
 // Check if the strategy depend on matrix-auth
-if(!(jenkins.getAuthorizationStrategy() instanceof GlobalMatrixAuthorizationStrategy) { return; }
+if(!(jenkins.getAuthorizationStrategy() instanceof GlobalMatrixAuthorizationStrategy)) { return; }
 
 // Admin user and password must be declared
 if(env.JENKINS_ADMIN_USER == null || env.JENKINS_ADMIN_PASS == null) { return; }
