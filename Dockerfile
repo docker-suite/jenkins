@@ -1,7 +1,7 @@
 FROM jenkins/jenkins:alpine
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-      description="REady to use alpine image with jenkins." \
+      description="Ready to use alpine image with jenkins." \
       vendor="docker-suite" \
       license="MIT"
 
