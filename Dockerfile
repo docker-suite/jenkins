@@ -1,9 +1,17 @@
 FROM jenkins/jenkins:alpine
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-      description="Ready to use alpine image with jenkins." \
-      vendor="docker-suite" \
-      license="MIT"
+    org.opencontainers.image.title="docker-suite dsuite/jenkins image" \
+    org.opencontainers.image.description="Ready to use alpine image with jenkins" \
+    org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
+    org.opencontainers.image.vendor="docker-suite" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.url="https://github.com/docker-suite/jenkins" \
+    org.opencontainers.image.source="https://github.com/docker-suite/jenkins" \
+    org.opencontainers.image.documentation="https://github.com/docker-suite/jenkins/blob/master/Readme.md"
+
+# Github token
+ARG GH_TOKEN
 
 ARG JENKINS_USER=jenkins
 ARG ROOT_USER=root

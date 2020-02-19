@@ -1,11 +1,16 @@
+## Name of the image
 DOCKER_IMAGE=dsuite/jenkins
+
+## Current directory
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
+.PHONY: *
 
 build:
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
+		--build-arg GH_TOKEN=${GH_TOKEN} \
 		--file $(DIR)/Dockerfile \
 		--tag $(DOCKER_IMAGE):latest \
 		$(DIR)/.
