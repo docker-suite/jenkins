@@ -10,6 +10,7 @@ build:
 	@docker build \
 		--build-arg http_proxy=${http_proxy} \
 		--build-arg https_proxy=${https_proxy} \
+		--build-arg no_proxy=${no_proxy} \
 		--build-arg GH_TOKEN=${GH_TOKEN} \
 		--file $(DIR)/Dockerfile \
 		--tag $(DOCKER_IMAGE):latest \
@@ -19,6 +20,7 @@ test: build
 	@docker run --rm -t \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
+		-e no_proxy=${no_proxy} \
 		-v $(DIR)/tests:/goss \
 		-v /tmp:/tmp \
 		-v /var/run/docker.sock:/var/run/docker.sock \
@@ -33,6 +35,7 @@ run: build
 	@docker run -it --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
+		-e no_proxy=${no_proxy} \
 		-e DEBUG_LEVEL=DEBUG \
 		-e TIMEZONE=Europe/Paris \
 		-e JENKINS_USER=hexosse \
@@ -54,6 +57,7 @@ readme:
 	@docker run -t --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
+		-e no_proxy=${no_proxy} \
 		-e DEBUG_LEVEL=DEBUG \
 		-e DOCKER_USERNAME=${DOCKER_USERNAME} \
 		-e DOCKER_PASSWORD=${DOCKER_PASSWORD} \
