@@ -6,43 +6,31 @@
 ![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/dsuite/jenkins/latest.svg?style=flat-square)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-A [jenkins] docker image built on top of the latest [Alpine base][alpine-base] container with docker socket and few plugins and groovy scripts to start.
+A customized [jenkins] container ready to use with preinstalled plugins and customs groovy scripts. 
 
-## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Features
-- docker socket, so docker agent can be used
-- default user from groovy script
-- set number of executors from groovy script
+
+## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Groovy scripts
+
+- crsf protection
+- disabled CLI remoting
+- disable old agent protocol
+- enabling slave master access control
+- define the number of executors (default to 0).
+- create a default admin user `jenkins`.
+- prevent anonymous users to have read access.
+- custom theme.
+
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Environment variables
-- JENKINS_ADMIN_USER : Name of the default user
-- JENKINS_ADMIN_PASS : Password of the default user
-- JENKINS_NB_EXECUTORS : number of executors
 
-> More environment variables from [Alpine base](https://github.com/docker-suite/alpine-base/#-environment-variables)
+- JENKINS_NB_EXECUTORS : number of executors
+- JENKINS_ADMIN_PASS : Password for `jenkins` user
+
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) How to use this image
 
-```bash
-docker run -d \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v ./.jenkins:/var/jenkins_home \
-    -p 8080:8080 \
-    -p 50000:50000 \
-    craftdock/jenkins
-```
+> For a complete Jenkins setup, look at [jenkins setup][jenkins-setup]
 
-```bash
-docker run -d \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v ./.jenkins:/var/jenkins_home \
-    -e JENKINS_ADMIN_USER=admin \
-    -e JENKINS_ADMIN_PASS=password \
-    -e JENKINS_NB_EXECUTORS=5 \
-    -e JENKINS_URL=http://localhost:8080 \
-    -p 8080:8080 \
-    -p 50000:50000 \
-    craftdock/jenkins
-```
 
 [jenkins]: https://jenkins.io/
-[alpine-base]: https://github.com/docker-suite/alpine-base/
+[jenkins-setup]: https://github.com/docker-suite/jenkins-setup/
