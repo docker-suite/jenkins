@@ -32,7 +32,7 @@ remove:
 	@if [ $(shell docker images -f "dangling=true" -q | wc -l) -gt 0 ]; then \
 		docker rmi -f $(shell docker images -f "dangling=true" -q); \
 	fi
-	@docker images | grep $(DOCKER_IMAGE) | tr -s ' ' | cut -d ' ' -f 2 | xargs -I {} docker rmi $(DOCKER_IMAGE):{}
+	@docker image list --format "table {{.Repository}}:{{.Tag}}" | grep $(DOCKER_IMAGE):$(version) | xargs -I {} docker rmi $(DOCKER_IMAGE):$(version)
 
 readme:
 	@docker run -t --rm \
