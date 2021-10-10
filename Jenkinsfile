@@ -16,11 +16,6 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                sh 'make remove'
-            }
-        }
         cleanup {
             cleanWs()
         }
